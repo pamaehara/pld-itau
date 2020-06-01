@@ -1,0 +1,1 @@
+echo 'POST https://www.4devs.com.br/ferramentas_online.php' | vegeta attack  -header "Accept: application/json, application/x-jackson-smile, application/cbor, application/*+json" -header "Content-Type: application/json;charset=UTF-8" -header "Accept-Encoding: gzip" -body vegeta-body.json -duration=10s -rate=5 -workers=3 | vegeta report

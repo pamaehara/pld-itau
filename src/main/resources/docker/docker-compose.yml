@@ -1,0 +1,88 @@
+version: '3.2'
+services:
+    postgres:
+        image: postgres:9.4
+        container_name: itau-postgres
+        ports:
+            - "5432:5432"
+        volumes:
+            - ~/var/lib/postgresql/data:/var/lib/postgresql/data:z
+            - ~/var/log/postgresql:/var/log/postgresql:z
+            - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:z
+        environment:
+            - POSTGRES_HOST_AUTH_METHOD=trust
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        networks:
+          - prc-network
+
+#    pgadmin4:
+#      image: dpage/pgadmin4
+#      container_name: pgadmin4
+#      ports:
+#        - "15432:80"
+#      volumes:
+#        - ~/var/lib/pgadmin:/var/lib/pgadmin:z
+#        - ~/:/home:z
+#      environment:
+#        - PGADMIN_DEFAULT_EMAIL=pamaehara@gmail.com
+#        - PGADMIN_DEFAULT_PASSWORD=postgres
+#      networks:
+#        - prc-network
+
+#    adminer:
+#      image: adminer
+#      restart: always
+#      links:
+#        - postgres
+#      ports:
+#        - "8080:8080"
+#      networks:
+#        - prc-network
+
+    redis:
+        image: redis:latest
+        container_name: itau-redis
+        command: >
+          --requirepass 123456
+        volumes:
+            - ~/docker-volumes/redis/data:/data:z
+        ports:
+          - "6379:6379"
+        networks:
+          - prc-network
+
+    redis_exporter:
+      image: oliver006/redis_exporter
+      container_name: redis_exporter
+      links:
+        - redis
+      ports:
+        - '9121:9121'
+      environment:
+        - REDIS_ADDR=itau-redis:6379
+        - REDIS_PASSWORD=123456
+      networks:
+        - prc-network
+
+    portainer:
+      image: portainer/portainer
+      container_name: "portainer"
+      networks:
+        - prc-network
+      ports:
+        - "9000:9000"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock:z
+        - /opt/portainer/data:/data:z
+
+    node-exporter:
+      image: prom/node-exporter
+      container_name: node-exporter
+      ports:
+        - '9100:9100'
+
+networks:
+    prc-network:
+        driver: bridge
