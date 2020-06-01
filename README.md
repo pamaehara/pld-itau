@@ -1,4 +1,6 @@
 # API Lista Restrita
+![Alt Text](https://github.com/pamaehara/pld-itau/blob/master/pld-itau.png)
+
 ## Sobre
 
 Este projeto tem como objetivo fornecer uma api de escrita e leitura de lista restrita de documentos.
