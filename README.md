@@ -1,9 +1,11 @@
 API Lista Restrita
 
 Sobre
+
 Este projeto tem como objetivo fornecer uma api de escrita e leitura de lista restrita de documentos.
 
 Arquitetura
+
 - Java 11
 - Spring-boot 2
 - Spring-data-jpa
@@ -12,6 +14,7 @@ Arquitetura
 - EhCache
 
 Pre-requisitos para exeutar local
+
 - Java 11
 - Docker e Docker-compose
 
