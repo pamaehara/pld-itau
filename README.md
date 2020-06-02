@@ -29,3 +29,10 @@ Ex.: docker-compose -f src/main/resources/docker/docker-compose.yml up
 Ex.: mvn spring-boot:run
 
 3 - Para testar basta acessar a url: http://localhost:8081/swagger-ui.html#/ no seu browser
+
+## Teste carga
+### Pre-requisito
+- instalar o vegeta (https://github.com/tsenart/vegeta)
+
+### Executar dentro da pasta do projeto
+- ./vegeta-demo-api.sh
